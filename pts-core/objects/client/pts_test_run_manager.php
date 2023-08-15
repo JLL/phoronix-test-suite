@@ -614,15 +614,15 @@ class pts_test_run_manager
 			$results_identifier = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 		}
 
+		if(empty($results_identifier))
+		{
+			$results_identifier = date('Y-m-d H:i', pts_client::current_time());
+		}
+
 		if(strlen($results_identifier) > 55)
 		{
 			$results_identifier = substr($results_identifier, 0, 54);
 			$results_identifier = substr($results_identifier, 0, strrpos($results_identifier, ' '));
-		}
-
-		if(empty($results_identifier))
-		{
-			$results_identifier = date('Y-m-d H:i', pts_client::current_time());
 		}
 
 		$this->results_identifier = $results_identifier;
