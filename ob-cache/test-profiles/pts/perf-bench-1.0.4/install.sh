@@ -2,7 +2,7 @@
 
 tar -xf linux-5.17.tar.xz
 cd linux-5.17/tools/perf
-make -j $NUM_CPU_CORES
+make -j $NUM_CPU_CORES WERROR=0
 echo $? > ~/install-exit-status
 cp perf ~
 
