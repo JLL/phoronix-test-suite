@@ -3,11 +3,9 @@
 <PhoronixTestSuite>
   <Downloads>
     <Package>
-      <URL>http://www.phoronix-test-suite.com/benchmark-files/jisooy-pmbench-46a3d394ca7b.tar.xz</URL>
-      <MD5>3dc44fdcdb509645b7fe2677b75eb4e5</MD5>
-      <SHA256>e9730d36dc1b5adb51a0cc65bde8fe1a79b77ec7e4876c2dd35609790ae4e556</SHA256>
-      <FileName>jisooy-pmbench-46a3d394ca7b.tar.xz</FileName>
-      <FileSize>243496</FileSize>
+      <URL>https://bitbucket.org/hesham-huawei/pmbench/get/1ea99f9b24cd689c87f12d243a2e9771c963737c.tar.gz</URL>
+      <Filename>hesham-huawei-pmbench-1ea99f9b24cd.tar.gz</Filename>
+      <FileSize>134543</FileSize>
     </Package>
   </Downloads>
 </PhoronixTestSuite>
