@@ -1,7 +1,7 @@
 #!/bin/sh
 tar -xf linux-6.2.6.tar.xz
 cd linux-6.2.6/tools/perf
-make -j $NUM_CPU_CORES
+make -j $NUM_CPU_CORES WERROR=0
 echo $? > ~/install-exit-status
 cp perf ~
 cd ~
