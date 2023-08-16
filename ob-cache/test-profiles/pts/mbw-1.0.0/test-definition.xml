@@ -57,12 +57,8 @@
           <Value>1024</Value>
         </Entry>
         <Entry>
-          <Name>4096 MiB</Name>
-          <Value>4096</Value>
-        </Entry>
-        <Entry>
-          <Name>8192 MiB</Name>
-          <Value>8192</Value>
+          <Name>2048 MiB</Name>
+          <Value>2048</Value>
         </Entry>
       </Menu>
     </Option>
