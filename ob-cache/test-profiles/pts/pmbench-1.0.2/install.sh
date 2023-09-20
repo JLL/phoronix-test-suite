@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 tar -xzf 1ea99f9b24cd689c87f12d243a2e9771c963737c.tar.gz
 cd hesham-huawei-pmbench-1ea99f9b24cd
 make pmbench march=aarch64

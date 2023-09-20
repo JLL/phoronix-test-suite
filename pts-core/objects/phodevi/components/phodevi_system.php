@@ -60,7 +60,7 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching),
 			'battery' => new phodevi_device_property('battery', phodevi::smart_caching),
 			'platform-profile' => new phodevi_device_property('sw_platform_profile', phodevi::std_caching),
-			'prefix' => new phodevi_device_property('sw_prefix', phodevi::std_caching),
+      'prefix' => new phodevi_device_property('sw_prefix', phodevi::std_caching),
 			);
 	}
 
