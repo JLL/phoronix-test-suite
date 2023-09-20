@@ -92,6 +92,15 @@ class pts_logger
 
 		return $log_file;
 	}
+	public static function default_log_file_path()
+	{
+		if(is_writable('/var/log') && (PTS_MODE == 'WEB_CLIENT' || defined('PHOROMATIC_SERVER') || defined('PTS_IS_DAEMONIZED_SERVER_PROCESS') || getenv('PTS_SERVER_PROCESS')))
+			$log_file = '/var/log/';
+		else
+			$log_file = PTS_USER_PATH;
+
+		return $log_file;
+	}
 	public function clear_log()
 	{
 		if($this->log_file == null)

@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -59,8 +60,31 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching),
 			'battery' => new phodevi_device_property('battery', phodevi::smart_caching),
 			'platform-profile' => new phodevi_device_property('sw_platform_profile', phodevi::std_caching),
+      'prefix' => new phodevi_device_property('sw_prefix', phodevi::std_caching),
 			);
 	}
+
+	public static function sw_prefix()
+	{
+		$prefix = '';
+
+		// Gets the system prefix
+		if(phodevi::is_linux())
+		{
+			// For termux environments, $PREFIX is already defined, usually /data/data/com.termux/files/usr
+			$prefix = getenv('PREFIX');
+
+			// Remove /usr at the end if any
+			if (str_ends_with($prefix, '/usr'))
+			{
+				$prefix = substr($prefix, 0, -4);
+			}
+		}
+
+		// TODO: does it still work for other environments if $PREFIX is undefined, or set to a value like '/' for example ?
+		return $prefix;
+	}
+
 	public static function sw_username()
 	{
 		// Gets the system user's name
@@ -1328,6 +1352,15 @@ class phodevi_system extends phodevi_device_interface
 				else
 				{
 					$os = php_uname('s');
+					if (phodevi::is_linux() && strtolower($os) == 'linux')
+					{
+						// Detect additional linux variants here
+						$prefix = getenv('PREFIX');
+						if (stripos($prefix, 'com.termux'))
+						{
+							$os = 'termux';
+						}
+					}
 				}
 			}
 			else if(strpos($os, ' ') === false)

@@ -1,6 +1,6 @@
 #!/bin/sh
 tar -xf BenchmarkMutex-1.tar.xz
-c++ -std=c++17  BenchmarkMutex.cpp -o BenchmarkMutex -lbenchmark -pthread
+c++ -std=c++17 -O2 BenchmarkMutex.cpp -o BenchmarkMutex -lbenchmark -pthread
 echo $? > ~/install-exit-status
 
 echo "#!/bin/sh

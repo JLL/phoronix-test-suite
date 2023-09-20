@@ -403,6 +403,7 @@ class pts_external_dependencies
 	private static function check_for_missing_system_files(&$required_system_files, $report_progress = false)
 	{
 		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
+		$prefix = phodevi::read_property('system', 'prefix');
 		$needed_os_packages = array();
 
 		if($report_progress)
@@ -418,19 +419,19 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
-			if(strpos($file, '.h') !== false && is_file('/usr/include/' . $file))
+			if(strpos($file, '.h') !== false && is_file($prefix . '/usr/include/' . $file))
 			{
 				$present = true;
 			}
-			else if(strpos($file, '.h') !== false && glob('/usr/include/*-linux-gnu/' . $file) != false)
+			else if(strpos($file, '.h') !== false && glob($prefix . '/usr/include/*-linux-gnu/' . $file) != false)
 			{
 				$present = true;
 			}
-			else if(strpos($file, '.so') !== false && glob('/usr/lib*/' . $file) != false)
+			else if(strpos($file, '.so') !== false && glob($prefix . '/usr/lib*/' . $file) != false)
 			{
 				$present = true;
 			}
-			else if(strpos($file, '.so') !== false && glob('/usr/lib*/*/' . $file) != false)
+			else if(strpos($file, '.so') !== false && glob($prefix . '/usr/lib*/*/' . $file) != false)
 			{
 				$present = true;
 			}
@@ -487,9 +488,15 @@ class pts_external_dependencies
 			for($i = 0; $i < count($file) && $file_is_there == false; $i++)
 			{
 				$file[$i] = trim($file[$i]);
+				$prefix = phodevi::read_property('system', 'prefix');
 
 				if(is_dir($file[$i]) || self::is_present($file[$i]))
 				{
+					$file_is_there = true;
+				}
+				else if (phodevi::is_linux() && is_dir($prefix . $file[$i]) || self::is_present($prefix . $file[$i]))
+				{
+					// This case needs to be separate from the one above as they cover different cases
 					$file_is_there = true;
 				}
 				else if(isset($file[$i][1]) && $file[$i][0] != '/')
@@ -499,7 +506,7 @@ class pts_external_dependencies
 					if(substr($file[$i], -2) == '.h' || substr($file[$i], -4) == '.hpp')
 					{
 						// May just be a relative header file to look for...
-						$possible_paths = array_merge(array('/usr/local/include/', '/usr/target/include/', '/usr/include/'), pts_file_io::glob('/usr/include/*-linux-gnu/'));
+						$possible_paths = array_merge(array($prefix . '/usr/local/include/', $prefix . '/usr/target/include/', $prefix . '/usr/include/'), pts_file_io::glob($prefix . '/usr/include/*-linux-gnu/'));
 						foreach($possible_paths as $path)
 						{
 							if(self::is_present($path . '/' . $file[$i]))
@@ -511,7 +518,7 @@ class pts_external_dependencies
 					else if(strpos($file[$i], '.so') !== false || substr($file[$i], -2) == '.a')
 					{
 						// May just be a relative shared library to look for...
-						$possible_paths = array_merge(array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/arm-linux-gnueabihf/'), pts_file_io::glob('/usr/lib/*-linux-gnu/'));
+						$possible_paths = array_merge(array($prefix . '/usr/local/lib/', $prefix . '/usr/lib/', $prefix . '/usr/lib64/', $prefix . '/usr/lib/arm-linux-gnueabihf/'), pts_file_io::glob($prefix . '/usr/lib/*-linux-gnu/'));
 
 						if(getenv('LD_LIBRARY_PATH'))
 						{
